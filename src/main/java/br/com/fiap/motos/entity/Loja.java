@@ -29,10 +29,12 @@ public class Loja {
     private String nome;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(
-            name = "VEICULO",
-            referencedColumnName = "ID_VEICULO",
-            foreignKey = @ForeignKey(name = "FK_LOJA_VEICULO")
+    @JoinTable(
+            name = "LOJA_VEICULO",
+            joinColumns = @JoinColumn(name = "ID_LOJA"),
+            inverseJoinColumns = @JoinColumn(name = "ID_VEICULO"),
+            foreignKey = @ForeignKey(name = "FK_LOJA_VEICULO"),
+            inverseForeignKey = @ForeignKey(name = "FK_VEICULO_LOJA")
     )
     private Set<Veiculo> veiculosComercializados = new LinkedHashSet<>();
 }

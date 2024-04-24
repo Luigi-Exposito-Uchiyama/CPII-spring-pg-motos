@@ -43,11 +43,17 @@ public class Veiculo {
     @Column(name = "MODELO")
     private String modelo;
 
-    //15 digitos
     @Column(name = "PALAVRA_DE_EFEITO")
     private String palavraDeEfeito;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(
+            name = "ID_FABRICANTE",
+            referencedColumnName = "ID_FABRICANTE",
+            foreignKey = @ForeignKey(name = "FK_VEICULO_FABRICANTE")
+    )
     private Fabricante fabricante;
+
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(
@@ -58,10 +64,12 @@ public class Veiculo {
     private TipoVeiculo tipo;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(
-            name = "ACESSORIO",
-            referencedColumnName = "ID_ACESSORIO",
-            foreignKey = @ForeignKey(name = "FK_VEICULO_ACESSORIO")
+    @JoinTable(
+            name = "VEICULO_ACESSORIO",
+            joinColumns = @JoinColumn(name = "ID_VEICULO"),
+            inverseJoinColumns = @JoinColumn(name = "ID_ACESSORIO"),
+            foreignKey = @ForeignKey(name = "FK_VEICULO_ACESSORIO"),
+            inverseForeignKey = @ForeignKey(name = "FK_ACESSORIO_VEICULO")
     )
     private Set<Acessorio> acessorios = new LinkedHashSet<>();
 }

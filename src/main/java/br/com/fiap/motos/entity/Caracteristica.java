@@ -30,11 +30,9 @@ public class Caracteristica {
     @Column(name = "ID_CARACTERISTICA")
     private Long id;
 
-    //30 digitos
     @Column(name = "NOME")
     private String nome;
 
-    //20 digitos
     @Column(name = "DESC")
     private String descricao;
 
